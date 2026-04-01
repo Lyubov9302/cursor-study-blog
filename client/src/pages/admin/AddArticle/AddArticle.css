@@ -1,0 +1,28 @@
+.admin-add-article {
+  flex: 1;
+  min-height: 0;
+  padding: var(--ant-padding-lg);
+  background: var(--ant-color-bg-container);
+}
+
+.admin-add-article-title {
+  margin: 0 0 var(--ant-margin-lg) 0;
+}
+
+.admin-add-article-form {
+  max-width: 760px;
+}
+
+.admin-add-article-upload .ant-upload-select {
+  width: 110px !important;
+  height: 110px !important;
+}
+
+.admin-add-article-actions-top {
+  margin-top: var(--ant-margin-xs);
+  margin-bottom: var(--ant-margin);
+}
+
+.admin-add-article-actions-bottom {
+  margin-top: var(--ant-margin-xs);
+}

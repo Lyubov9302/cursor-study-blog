@@ -6,6 +6,7 @@ import {
   BlogDetail,
   AdminLayout,
   Dashboard,
+  AddArticle,
   Articles,
   Comments,
   Login,
@@ -67,6 +68,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path={ROUTES.ADMIN} element={token ? <AdminLayout /> : <Login />}>
           <Route index element={<Dashboard />} />
+          <Route path='add-article' element={<AddArticle />} />
           <Route path='articles' element={<Articles />} />
           <Route path='comments' element={<Comments />} />
         </Route>

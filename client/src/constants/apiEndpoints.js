@@ -4,6 +4,8 @@ export const API_ENDPOINTS = {
   BLOG_BY_ID: (id) => `/api/blog/${id}`,
   BLOG_UPDATE: (id) => `/api/blog/${id}`,
   BLOG_DELETE: (id) => `/api/blog/${id}`,
+  BLOG_ADD: '/api/blog/add',
+  BLOG_GENERATE: '/api/blog/generate',
   BLOG_PUBLISH: '/api/blog/publish',
   BLOG_UNPUBLISH: '/api/blog/unpublish',
   

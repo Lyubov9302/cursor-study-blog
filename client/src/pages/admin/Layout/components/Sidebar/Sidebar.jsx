@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { Menu, Flex } from 'antd'
-import { AppstoreOutlined, UnorderedListOutlined, CommentOutlined } from '@ant-design/icons'
+import { AppstoreOutlined, UnorderedListOutlined, CommentOutlined, PlusOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { ROUTES } from '@/constants/routes'
 import './Sidebar.css'
@@ -15,6 +15,11 @@ function Sidebar() {
       key: ROUTES.ADMIN_DASHBOARD,
       icon: <AppstoreOutlined />,
       label: <NavLink to={ROUTES.ADMIN_DASHBOARD}>{t('admin.sidebar.dashboard')}</NavLink>,
+    },
+    {
+      key: ROUTES.ADMIN_ADD_ARTICLE,
+      icon: <PlusOutlined />,
+      label: <NavLink to={ROUTES.ADMIN_ADD_ARTICLE}>{t('admin.sidebar.addArticle')}</NavLink>,
     },
     {
       key: ROUTES.ADMIN_ARTICLES,

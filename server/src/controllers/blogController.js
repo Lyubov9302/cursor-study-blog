@@ -4,6 +4,7 @@ import Blog from '../models/Blog.js'
 import Comment from '../models/Comment.js'
 import { transformBlogImage, transformBlogsImages } from '../utils/imageUrl.js'
 import { asyncHandler } from '../helpers/asyncHandler.js'
+import generateWithGemini from '../configs/gemini.js'
 
 // Helper to delete image file
 const deleteImageFile = (imagePath) => {
@@ -99,6 +100,65 @@ export const getBlogComments = asyncHandler(async (req, res) => {
     success: true,
     count: comments.length,
     comments
+  })
+})
+
+export const createBlog = asyncHandler(async (req, res) => {
+  const { title, subTitle, description, category, isPublished } = req.body
+
+  const imagePath = req.file ? `/uploads/blogs/${req.file.filename}` : ''
+  const newBlog = await Blog.create({
+    title: title.trim(),
+    subTitle: subTitle?.trim() || '',
+    description: description.trim(),
+    category: category.trim(),
+    author: req.user.userId,
+    authorName: req.user.name || req.user.email || 'Admin',
+    image: imagePath,
+    isPublished: isPublished === 'true'
+  })
+
+  res.status(201).json({
+    success: true,
+    message: newBlog.isPublished ? 'Blog published successfully' : 'Blog saved as draft successfully',
+    blog: transformBlogImage(newBlog, req)
+  })
+})
+
+const tryParseJson = (rawText) => {
+  try {
+    return JSON.parse(rawText)
+  } catch {
+    const cleaned = rawText.replace(/```json|```/g, '').trim()
+    return JSON.parse(cleaned)
+  }
+}
+
+export const generateBlogContent = asyncHandler(async (req, res) => {
+  const { title, subTitle = '', category } = req.body
+  const prompt = `
+You are a blog writer.
+Generate a blog draft in strict JSON format.
+Return only valid JSON with keys: title, subTitle, description.
+
+Requirements:
+- Title topic: ${title}
+- Subtitle hint: ${subTitle || 'Create a concise subtitle'}
+- Category: ${category}
+- Description must be plain text with headings and paragraphs.
+- Keep content around 400-600 words.
+`
+
+  const rawResponse = await generateWithGemini(prompt)
+  const parsed = tryParseJson(rawResponse)
+
+  res.json({
+    success: true,
+    data: {
+      title: parsed.title || title,
+      subTitle: parsed.subTitle || subTitle,
+      description: parsed.description || ''
+    }
   })
 })
 

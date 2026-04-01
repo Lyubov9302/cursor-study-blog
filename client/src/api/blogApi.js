@@ -21,6 +21,15 @@ export const blogApi = {
     })
   },
 
+  // Create blog
+  create: async (formData) => {
+    return await axios.post(API_ENDPOINTS.BLOG_ADD, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+
   // Delete blog
   delete: async (id) => {
     return await axios.delete(API_ENDPOINTS.BLOG_DELETE(id))
@@ -39,6 +48,11 @@ export const blogApi = {
   // Unpublish blog
   unpublish: async (id) => {
     return await axios.post(API_ENDPOINTS.BLOG_UNPUBLISH, { id })
+  },
+
+  // Generate blog content with AI
+  generate: async (payload) => {
+    return await axios.post(API_ENDPOINTS.BLOG_GENERATE, payload)
   }
 }
 

@@ -5,6 +5,7 @@ export { Home, BlogDetail } from './public'
 export {
   Layout as AdminLayout,
   Dashboard,
+  AddArticle,
   Articles,
   Comments,
   Login,
